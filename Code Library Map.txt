@@ -18,7 +18,7 @@
 	- aws_infill.R : function that produces regression/plots, useful to infill missing AWS data with another Stn. 
 	- aws_functions.R : functions to summarize and fill AWS data scraped from Env. Can
 	- canaus_filling.R : uses aws_functions.R to fill AWS data for CanAus project.
-
+	- calculate_averages.R : uses data.table package to aggregate data quickly. 
 ——————————————————————————————-
 # Hydrology Functions
 ——————————————————————————————-
