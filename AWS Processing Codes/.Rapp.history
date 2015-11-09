@@ -1,0 +1,17 @@
+x = c(1:5)
+x[1] = ">1"
+x
+strsplit(x, '<')
+strsplit(x[1], '<')
+strsplit(x[1], '>')
+strsplit(x, '>')
+strsplit(x[1], '>')
+strsplit(x[1], '>')[2]
+strsplit(x[1], '>')[1]
+matrix(unlist(strsplit(x[1], '>'),ncol = 2, byrow = T)[,1]
+)
+matrix(unlist(strsplit(x[1], '>')),ncol = 2, byrow = T)[,1]
+matrix(unlist(strsplit(x[1], '>')),ncol = 2, byrow = T)[,2]
+x[1] = matrix(unlist(strsplit(x[1], '>')),ncol = 2, byrow = T)[,2]
+x
+as.numeric(x)

@@ -1,0 +1,31 @@
+####################
+### CODE LIBRARY ###
+####################
+
+——————————————————————————————-
+# Misc. (Folder)
+——————————————————————————————
+	- environment_canada_aws_scraping_tool.R : scrapes AWS data of Env. Can. site 		  (daily and hourly modules)
+	- bctopomap.R : generates elevation and borders for a BC map. 
+
+——————————————————————————————-
+# AWS Processing Codes (Folder)
+——————————————————————————————- 
+	- CCDSTDailyWeather.R : aggregates hourly into daily data and writes
+	- compile_sparwood.R : merges separate AWS files, and compares with Fernie Stn. 
+	- compile_SWEs.R : merges and aggregates SWE data from 3 sites
+	- compile_cranbrook.R : fixes timestamp issue and aggregates AWS data
+	- aws_infill.R : function that produces regression/plots, useful to infill missing AWS data with another Stn. 
+	- aws_functions.R : functions to summarize and fill AWS data scraped from Env. Can
+	- canaus_filling.R : uses aws_functions.R to fill AWS data for CanAus project.
+
+——————————————————————————————-
+# Hydrology Functions
+——————————————————————————————-
+	- pond_curves.R : loess smoothing on pond elevation data to make V-A curve
+	- maf.R : functions to calculate MAF from daily discharge data
+	- Gumbel_log3_FF.R Gumbel EV and Log Pearson 3 Methods to estimate flood frequency (function).
+	- 7Qlog3.R Calculates annual minimum 7-day averages and Log3 to find drought freq. 
+	- Joint_Prob.R functions to make correlation matrix and calculate joint exceedance probabilities for correlated Rivers/Gauges.
+	- Hydroagg_functions.R functions to calculate MAF, MMF, AMF from WSC data (4/28/15 , includes functions to plot daily flows, and calculate anomalies).
+	- drought_function.R : calculates drought freq. having been given MAF or other drought data.

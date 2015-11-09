@@ -1,0 +1,1158 @@
+head(data)
+col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm', 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+	colnames(data) = col.names#
+	data = data[-which(data$day=='Sum'):-length(data$day),]#
+	data$Year = year#
+	data$Month = month
+head(data)
+new_dates = seq(strptime(paste('01',month,year), paste(01,month+1,year), format = '%d %m %y'), by = 'day')
+new_dates = seq(strptime(paste('01',month,year), paste('01',month+1,year), format = '%d %m %y'), by = 'day')
+new_dates = seq(strptime(paste('01',as.character(month),year), paste('01',as.character(month+1),year), format = '%d %m %y'), by = 'day')
+strptime(paste('01',as.character(month),year))
+strptime(paste('01',as.character(month),year), format = '%d %m %Y')
+new_dates = seq(strptime(paste('01',as.character(month),year), paste('01',as.character(month+1),year), format = '%d %m %Y'), by = 'day')
+strptime(paste('01',month,year), format = '%d %m %Y')
+new_dates = seq(strptime(paste('01',month,year), paste('01',(month+1),year), format = '%d %m %Y'), by = 'day')
+month
+strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')
+new_dates = seq(strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y'), by = 'day')
+new_dates1 = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')
+new_dates
+new_dates1
+new_dates =seq(nd[1], nd[2], by = 'day')
+nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+#
+new_dates =seq(nd[1], nd[2], by = 'day')
+new_dates
+new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]
+new_dates
+col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',
+'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
+col.names
+m = matrix(nrow = length(col.names))
+m
+m = matrix(ncol = length(col.names))
+m
+m = data.frame(m)
+m
+m = matrix(ncol = length(col.names))
+m[,1] = day(new_dates)
+m = matrix(ncol = length(col.names), nrow = length(new_dates))
+m[,1] = day(new_dates)
+m
+colnames(m) = col.names
+m
+data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))
+head(data)
+data[,1] = day(new_dates)
+head(data)
+colnames(data) = col.names
+nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names
+data$Year = year
+data$Month = month
+head(data)
+head(weather_data)
+tail(weather_data)
+month
+month  = 3
+year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( dim(data) != NULL ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}	#
+	data$Year = year#
+	data$Month = month
+data
+data = readHTMLTable(url)
+data = data.frame(data[2])
+data = data[-1,]
+data
+dim(data)
+is.null(data)
+is.null(dim(data))
+year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}	#
+	data$Year = year#
+	data$Month = month
+head(data)
+month1 = '2008-01-01'#
+month2 = '2008-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=QC&StationID=5415&dlyRange=1941-09-01%7C2014-07-31"  	# Montreal AWS#
+# location_url = "Prov=&StationID=46568&dlyRange=2007-11-01%7C2015-01-25&" 	# Grise Fiord Climate#
+# location_url = 'Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25'	# Grise Fiord#
+# # http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25&Year=1997&Month=11&Day=1#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')#
+#
+# # Keep estimates ('LegendEE')#
+# test = weather_data[,i]#
+# test[grep('+LegendEE',test)] = as.numeric(strsplit(as.character(test[grep('+LegendEE',test)]),'LegendEE', collapse = T))#
+# test[grep('+LegendEE',weather_data[,i])] = strsplit(as.character(sub),"LegendEE")#
+# by(weather_data,function(x) )#
+# Write .csv#
+	# write.csv(weather_data,'weather_dats.csv')#
+#
+## END
+head(weather_data)
+month
+month = 2
+start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
+head(data)
+if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}
+head(data)
+data$Year = year
+data$Month = month
+weather_data = rbind(weather_data,data)
+tail(weather_data)
+month = 3
+start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
+if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}
+data$Year = year
+data$Month = month
+head(data)
+tail(data)
+weather_data = rbind(weather_data,data)
+dim(data)
+dim(weather_data)
+class(data)
+apply(data,1,class)
+apply(weather_data,1,class)
+apply(data,2,class)
+apply(weather_data,2,class)
+data2 = apply(data,2,as.character)
+head(data2)
+wdat = rbind(weather_data,data2)
+month1 = '2008-01-01'#
+month2 = '2008-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=QC&StationID=5415&dlyRange=1941-09-01%7C2014-07-31"  	# Montreal AWS#
+# location_url = "Prov=&StationID=46568&dlyRange=2007-11-01%7C2015-01-25&" 	# Grise Fiord Climate#
+# location_url = 'Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25'	# Grise Fiord#
+# # http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25&Year=1997&Month=11&Day=1#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		data2 = apply(data,2,as.character)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')
+head(data)
+month1 = '2008-01-01'#
+month2 = '2008-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=QC&StationID=5415&dlyRange=1941-09-01%7C2014-07-31"  	# Montreal AWS#
+# location_url = "Prov=&StationID=46568&dlyRange=2007-11-01%7C2015-01-25&" 	# Grise Fiord Climate#
+# location_url = 'Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25'	# Grise Fiord#
+# # http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25&Year=1997&Month=11&Day=1#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		data = apply(data,2,as.character)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')
+month1 = '2008-01-01'#
+month2 = '2008-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=QC&StationID=5415&dlyRange=1941-09-01%7C2014-07-31"  	# Montreal AWS#
+# location_url = "Prov=&StationID=46568&dlyRange=2007-11-01%7C2015-01-25&" 	# Grise Fiord Climate#
+# location_url = 'Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25'	# Grise Fiord#
+# # http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25&Year=1997&Month=11&Day=1#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}	#
+	data$Year = year#
+	data$Month = month#
+	data = apply(data,2,as.character)#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')
+month = 12
+nd = strptime(c(paste('01',month,year), paste('01',(month+1),year)), format = '%d %m %Y')
+nd
+nmonth = ifelse(month <12, month+1, 1)
+nmonth
+month 2
+month = 2
+start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
+if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}
+data$Year = year#
+	data$Month = month#
+	data = apply(data,2,as.character)
+head(data)
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}	#
+	data$Year = year#
+	data$Month = month
+head(data)
+class(data$day)
+class(data$maxT)
+1:10
+as.factor(1:10)
+month1 = '2008-01-01'#
+month2 = '2008-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=QC&StationID=5415&dlyRange=1941-09-01%7C2014-07-31"  	# Montreal AWS#
+# location_url = "Prov=&StationID=46568&dlyRange=2007-11-01%7C2015-01-25&" 	# Grise Fiord Climate#
+# location_url = 'Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25'	# Grise Fiord#
+# # http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&Prov=NU&StationID=1754&dlyRange=1984-08-01%7C2010-06-25&Year=1997&Month=11&Day=1#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		}	#
+	data$Year = year#
+	data$Month = month#
+	data = apply(data,2,as.factor)#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')#
+#
+# # Keep estimates ('LegendEE')#
+# test = weather_data[,i]#
+# test[grep('+LegendEE',test)] = as.numeric(strsplit(as.character(test[grep('+LegendEE',test)]),'LegendEE', collapse = T))#
+# test[grep('+LegendEE',weather_data[,i])] = strsplit(as.character(sub),"LegendEE")#
+# by(weather_data,function(x) )#
+# Write .csv#
+	# write.csv(weather_data,'weather_dats.csv')#
+#
+## END
+head(weather_data)
+class(month)
+month = 2
+nmonth = ifelse(month <12, month+1, 1)
+nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')
+nd
+new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]
+data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))
+data[,1] = day(new_dates)
+colnames(data) = col.names
+head(dayta)
+head(data)
+class(data$day)
+data$Year = year
+data$Month = month
+data = apply(data,2,as.factor)
+class(data$day)
+head(data)
+nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names#
+		data = apply(data,2,as.factor)
+head(data)
+data$Year = year
+data$Month = month
+head(data)
+data = data.frame(matrix(ncol = length(col.names), nrow = length(new_dates)))
+data[,1] = day(new_dates)
+colnames(data) = col.names
+head(data)
+class(data$day)
+class(data$maxT)
+data = data.frame(matrix(NA, ncol = length(col.names), nrow = length(new_dates)))
+data
+class(data[,1])
+data1 = as.factor(data)
+head(data)
+data1 = apply(data, 2, as.factor)
+head(data1)
+nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(NA, ncol = length(col.names), nrow = length(new_dates)))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names
+head(data)
+class()
+data$Year = year
+data$Year
+data$Month
+data$Month = month
+head(data)
+class(data$day)
+nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(NA, ncol = length(col.names), nrow = length(new_dates)))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = day(new_dates)#
+		colnames(data) = col.names
+class(data$day)
+data$day
+head(data)
+head(data[,1])
+nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)
+head(data)
+data[,1] = day(new_dates)
+nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = data.frame(matrix(NA, ncol = length(col.names), nrow = length(new_dates)))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names
+head(data)
+data.frame(data)
+nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)
+head(data)
+data$Year = year
+data$Month = month
+head(data)
+weather_data = rbind(weather_data,data)
+head(weather_data)
+tail(weather_data)
+month1 = '2008-01-01'#
+month2 = '2008-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month <12, month+1, 1)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')
+tail(weather_data)
+month = 12
+start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
+head(data)
+is.null(dim(data))
+nmonth = ifelse(month < 12, month+1, 1)
+nmonth
+nd = strptime(c(paste('01',month,year), paste('01',nmonth,year)), format = '%d %m %Y')
+nd
+nmonth = ifelse(month < 12, month+1, 1)
+nyear = ifelse(month == 12, year+1, year)
+nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')
+nd
+month1 = '2008-01-01'#
+month2 = '2008-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')#
+#
+# # Keep estimates ('LegendEE')#
+# test = weather_data[,i]#
+# test[grep('+LegendEE',test)] = as.numeric(strsplit(as.character(test[grep('+LegendEE',test)]),'LegendEE', collapse = T))#
+# test[grep('+LegendEE',weather_data[,i])] = strsplit(as.character(sub),"LegendEE")#
+# by(weather_data,function(x) )#
+# Write .csv#
+	# write.csv(weather_data,'weather_dats.csv')#
+#
+## END
+head(weather_data)
+plot(maxT)
+plot(weather_datamaxT)
+plot(weather_data$maxT)
+plot(as.numeric(as.character(weather_data$maxT)))
+plot(as.numeric(as.character(weather_data$maxT)), type = 'l')
+tail(weather_data)
+weather_data
+dim(weather_data)
+month = 4
+start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
+data
+month = 12
+start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
+data
+month1 = '2008-01-01'#
+month2 = '2009-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	# write.csv(weather_data,'fernie13_14.csv')#
+#
+# # Keep estimates ('LegendEE')#
+# test = weather_data[,i]#
+# test[grep('+LegendEE',test)] = as.numeric(strsplit(as.character(test[grep('+LegendEE',test)]),'LegendEE', collapse = T))#
+# test[grep('+LegendEE',weather_data[,i])] = strsplit(as.character(sub),"LegendEE")#
+# by(weather_data,function(x) )#
+# Write .csv#
+	# write.csv(weather_data,'weather_dats.csv')#
+#
+## END
+tail(weather_data)
+month
+nmonth = ifelse(month < 12, month+1, 1)
+nyear = ifelse(month == 12, year+1, year)
+nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')
+new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]
+data
+data[,1] = as.factor(day(new_dates))
+tail(data)
+nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]
+data[,1] = as.factor(day(new_dates))
+tail(data)
+nd
+new_dates
+days(1:365)
+exp = seq(as.Date('2011-12-01'), as.Date('2012-01-01'), by = 'days')
+exp
+days(exp)
+day(exp)
+(c(paste('01',month,year), paste('01',nmonth,nyear))
+)
+temp = c(paste('01',month,year), paste('01',nmonth,nyear))
+as.Date(temp)
+nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')
+nd
+seq(nd[1],nd[2], by 'days')
+seq(nd[1],nd[2], by= 'days')
+nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')[-length(new_dates)]
+new_dates
+new_dates =seq(nd[1], nd[2], by = 'day')
+new_dates
+new_dates = new_dates[-length(new_dates)]
+new_dates
+nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')#
+		new_dates = new_dates[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)
+data
+#-----------------#
+library(lubridate)#
+library(XML)
+month1 = '1970-01-01'#
+month2 = '1997-09-30'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   # YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    # Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    # Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+location_url = "Prov=AB&StationID=2381&dlyRange=1912-10-01%7C1997-09-30"#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+	# Form URL#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')#
+		new_dates = new_dates[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	write.csv(weather_data,'coleman70_97.csv')
+write.csv(weather_data,'coleman70_972.csv', row.names = F)
+month1 = '1977-06-01'#
+month2 = '1993-07-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   	# YXC Cranbrook#
+# location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    	# Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    	# Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+# location_url = "Prov=AB&StationID=2381&dlyRange=1912-10-01%7C1997-09-30" 		# Coleman, AB#
+location_url = "Prov=&StationID=1170&dlyRange=1977-06-01%7C1993-07-31"			# Corbin, BC#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+	# Form URL#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')#
+		new_dates = new_dates[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	write.csv(weather_data,'corbin77_93.csv', row.names = F)
+#############################
+# DAILY WEATHER DOWNLOADS ##
+#############################
+# Location dependent URL#
+# Full URL looks lke this:#
+##
+# http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&#
+# Prov=QC&StationID=5415&dlyRange=1941-09-01%7C2014-07-31   <--- This is the part to parse out#
+# &cmdB1=Go&Year=2014&Month=8&cmdB1=Go##
+##
+# Go to climate.weather.gc.ca and look up daily site and input url from "Prov=" to "&cmbB1="#
+# (need to press 'next day' once to get proper html...)#
+month1 = '1980-01-01'#
+month2 = '2014-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   	# YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    	# Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    	# Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+# location_url = "Prov=AB&StationID=2381&dlyRange=1912-10-01%7C1997-09-30" 		# Coleman, AB#
+# location_url = "Prov=&StationID=1170&dlyRange=1977-06-01%7C1993-07-31"			# Corbin, BC#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+	# Form URL#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')#
+		new_dates = new_dates[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	write.csv(weather_data,'sparwood80_14.csv', row.names = F)
+month1 = '1993-06-04'#
+month2 = '2014-12-31'#
+start = strptime(month1, format = '%Y-%m-%d')#
+end = strptime(month2, format = '%Y-%m-%d')#
+months = seq(start,end, 'months')#
+#
+# location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27"   	# YXC Cranbrook#
+location_url = "Prov=BC&StationID=1207&dlyRange=1980-03-01%7C2015-01-27"    	# Sparwood, BC#
+# location_url = "Prov=BC&StationID=6842&dlyRange=1992-11-01%7C2015-01-27"    	# Sparwood CS, BC#
+# location_url = "Prov=BC&StationID=1180&dlyRange=1913-12-01%7C2015-01-28"      # Fernie, BC#
+# location_url = "Prov=AB&StationID=2381&dlyRange=1912-10-01%7C1997-09-30" 		# Coleman, AB#
+# location_url = "Prov=&StationID=1170&dlyRange=1977-06-01%7C1993-07-31"			# Corbin, BC#
+location_url = "Prov=&StationID=10890&dlyRange=1993-06-04%7C2015-03-04"			# Crowsnest#
+weather_data = c()#
+for (i in 1:length(months)){#
+	year =  year(months[i])#
+	month = month(months[i])	#
+	# Form URL#
+	start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')#
+	mid_url = '&Month='#
+	end_url = "&cmdB1=Go#"#
+	url = paste(start_url, year, mid_url, month, end_url,sep = '')#
+#
+# Scrape data from html pages#
+	data = readHTMLTable(url)#
+	data = data.frame(data[2])#
+	data = data[-1,]#
+	col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',#
+		 'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')#
+#
+	# Check to see If Data not available for month#
+	if( is.null(dim(data)) == F ){#
+		colnames(data) = col.names#
+		data = data[-which(data$day=='Sum'):-length(data$day),]#
+	} else {#
+		# If no data for the month, construct an empty month to bind data to#
+		nmonth = ifelse(month < 12, month+1, 1)#
+		nyear = ifelse(month == 12, year+1, year)#
+		nd = strptime(c(paste('01',month,year), paste('01',nmonth,nyear)), format = '%d %m %Y')#
+		new_dates =seq(nd[1], nd[2], by = 'day')#
+		new_dates = new_dates[-length(new_dates)]#
+		data = matrix(NA, ncol = length(col.names), nrow = length(new_dates))#
+		data = apply(data, 2, as.factor)#
+		data[,1] = as.factor(day(new_dates))#
+		colnames(data) = col.names#
+		data = data.frame(data)#
+		}	#
+	data$Year = year#
+	data$Month = month#
+#
+	# data$day = matrix(unlist(strsplit(as.character(data$day), ' ', fixed = T)),ncol = 4,byrow = T)[,1]#
+# Collate Data#
+	weather_data = rbind(weather_data,data)#
+}#
+	write.csv(weather_data,'crowsnest93_14.csv', row.names = F)
