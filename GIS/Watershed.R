@@ -31,12 +31,13 @@ source('gdal_polygonizeR.R')		# Needed to polygonize rasters
 # Set the Initiation Value (see "Channel Network" below)
 # Too low and you will have too many small streams, 
 # too large, and you won't have enough complexity...
-init_value = 5000000			# "my" default = 10000000
+init_value = 100000000			# "my" default = 10000000
 
 
 # Load DEM and prepare for SAGA Analyses
 dem = raster('permanent_data/dem.tif')
-# writeRaster(dem, "dem_saga.sdat", "SAGA", overwrite = T)
+dem = crop(dem, c(624989.9, 674999.9, 5520000, 5580000 ))
+writeRaster(dem, "dem_saga.sdat", "SAGA", overwrite = T)
 
 # # Demonstrative...
 # rsaga.env()
@@ -44,7 +45,8 @@ dem = raster('permanent_data/dem.tif')
 
 # # Fill Sinks (takes a long time... zzz... get coffee... zzz...)
 # 		 	- Use method = 'xxl.wang.liu.2006' for "BIG" data
-# rsaga.fill.sinks('dem_saga.sgrd', 'dem_sinkfilled.sgrd', method = "xxl.wang.liu.2006")
+rsaga.fill.sinks('dem_saga.sgrd', 'permanent_data/dem_sinkfilled.sgrd', 
+					method = "xxl.wang.liu.2006")
 dem_filled = raster('permanent_data/dem_sinkfilled.sdat')
 projection(dem_filled) = projection(dem)
 
@@ -72,10 +74,13 @@ channel_shape = readOGR('channel_ntwrk.shp', 'channel_ntwrk')
 # Ensure that if there is overlap, you have them ordered from largest-->smallest
 # i.e. a later watershed should only overlap with 1 previous watershed
 # Create/Read POIs
-POIs = readOGR('permanent_data/watershed_pois.kml', 'Watersheds')
-POIs = spTransform(POIs, crs(dem))
+# POIs = readOGR('permanent_data/watershed_pois.kml', 'Watersheds')
+# POIs = spTransform(POIs, crs(dem))
 # poi_dat = data.frame(X = c(639930,639768), Y = c(5484783,5484518), NAME = c('Fernie', 'CoalCr'))
-# POIs = SpatialPointsDataFrame(coordinates(poi_dat[,-3]), poi_dat[,-3], proj4string = crs(dem))
+poi_dat = read.csv('permanent_data/elk_points.csv')
+POIs = SpatialPointsDataFrame(coordinates(poi_dat[,c(-1,-4)]), 
+				data.frame(Name = poi_dat$Site_Code), 
+				proj4string = crs(dem))
 writeOGR(POIs,'POIs.shp',layer = 'POIs', driver = 'ESRI Shapefile', overwrite = T)
 ###################################################################
 
@@ -86,7 +91,7 @@ rsaga.geoprocessor(lib = 'shapes_points', 19,
 					INPUT = 'POIs.shp', 						# Catchment POIs
 					SNAP = 'channel_ntwrk.shp',				# Channel Network (created above)
 					OUTPUT = 'snapped_points.shp',
-					DISTANCE = 500) )						# Search distance
+					DISTANCE = 1000) )						# Search distance
 snapped_points = readOGR('snapped_points.shp', 'snapped_points')
 
 # Upslope Area
@@ -118,14 +123,29 @@ plot(dem, col = terrain.colors(100))
 plot(subb, add = T)
 plot(channel_shape, add = T, col = 'blue')
 text(subb, subb$Name, cex = 0.6, font = 2) # Add labels for subbasins 
+points(snapped_points)
 
 # Write the output, dummy!
-writeOGR(subb,'permanent_data/watersheds_final.shp',layer = 'watersheds_final', driver = 'ESRI Shapefile', overwrite = T)
+writeOGR(subb,'permanent_data/watersheds_final.shp',
+			layer = 'watersheds_final', 
+			driver = 'ESRI Shapefile', 
+			overwrite = T)
+
 ###################################################################
 ######### 					END CODE 						#######
 ###################################################################
-
 x = readOGR('permanent_data/watersheds_final.shp', 'watersheds_final')
-plot(x)
-text(x, x$Name, cex = 0.6, font = 3)
-data.frame(Watershed = x$Name, Area.km2 = area(x)/10^6)
+x = x[-6,]
+shed = data.frame(Watershed = x$Name, Area.km2 = area(x)/10^6)
+
+library('RColorBrewer')
+library('GISTools')
+library('raster')
+
+
+plot(dem, col = brewer.pal(100,'Greys'))
+plot(x, col = add.alpha(brewer.pal(length(x$DN),'Spectral'),0.6), add = T )
+plot(channel_shape, add = T, col = 'blue')
+# points(snapped_points)
+legend('bottomleft',legend =  paste(x$Name,round(shed$Area,1), 'km2'), 
+		fill = brewer.pal(length(x$DN), 'Spectral'), bg = 'white')
