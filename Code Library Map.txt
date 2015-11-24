@@ -29,3 +29,4 @@
 	- Joint_Prob.R functions to make correlation matrix and calculate joint exceedance probabilities for correlated Rivers/Gauges.
 	- Hydroagg_functions.R functions to calculate MAF, MMF, AMF from WSC data (4/28/15 , includes functions to plot daily flows, and calculate anomalies).
 	- drought_function.R : calculates drought freq. having been given MAF or other drought data.
+	- flow_trends.R : looks at changes in Flood Frequency over time. 
