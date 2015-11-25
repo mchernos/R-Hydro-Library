@@ -162,7 +162,7 @@ daily.flowQ = function(Q, date, title, record.start = NULL, test.year = NULL){
 	# New Data colation, plot data
 	newdata = data.frame(date = strptime(1:366,'%j'), Qmean, Q90, Q10)
 	par(mar = c(4,4.5,3,3))
-	plot(newdata$date, Qmean, type = 'l', lwd = 2, ylim = c(0,max(Q90)),
+	plot(newdata$date, Qmean, type = 'l', lwd = 2, ylim = c(0,max(Q90,na.rm = T)),
 			xlab = '', ylab = expression(paste('Daily Average Discharge (',m^3,'/s)')), 
 			main = title)
 	mtext(yrs)
