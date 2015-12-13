@@ -6,7 +6,7 @@
 # 
 
 # Function to correct EC for Water Temperature
-# EC_corr = function(EC_raw, Tw){EC_raw * (1 + 0.019 * (Tw - 25))}
+EC_corr = function(Cond, Tw){Cond * (1 + 0.019 * (Tw - 25))}
 
 ##################################
 # Determining *k* by Calibration #
@@ -98,15 +98,14 @@ k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
 # Tw = data$Temp..C.
 ##########
 
-Q.salt = function(Sp_Cond, Tw, k, V_slug = 1000, dT = 1){
+Q.salt = function(Cond, Tw, k, V_slug = 1000, dT = 1){
   # dT = 1                  # (s) - sampling resolution
   # V_slug = 1000           # mL
   V_slug = V_slug/1000^2  # mL/L (convert to m^3)
   # k = 5e-6                # From Above
   
   # 7) Correct EC for Tw
-  EC_corr = function(Sp_Cond, Tw){Sp_Cond * (1 + 0.019 * (Tw - 25))}
-  EC = EC_corr(Sp_Cond, Tw)
+  EC = EC_corr(Cond, Tw)
   
   # EC_bg = min(EC) # uS/cm 
   EC_bg = EC[1]
