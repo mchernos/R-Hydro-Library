@@ -312,6 +312,7 @@ date.range = function(filename, record.start = 1970){
   date = strptime(data$Date, format = '%Y/%m/%d')
   data.frame(
     Gauge = unlist(strsplit(filename,'_daily.csv')),
+    ID = data$ID[1],
     Record = paste(min(year(date)),'-', max(year(date)) )
   )
 }
