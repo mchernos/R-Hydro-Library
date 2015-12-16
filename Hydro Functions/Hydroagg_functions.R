@@ -278,3 +278,42 @@ fit.plots = function(obs, sim, data, plot.title, autocorrelation = F){
 		abline(v = 0, lty = 4, col = 'red')}
 }
 # fit.plots(subb$xMich13, subb$Mich13, subb, 'Mich 13.3')
+
+################################
+# CALCULATE MEAN MONTHLY FLOWS #
+################################
+# Read in data, produce average monthly flows for period of specified record
+Mmmf = function(filename, record.start = NULL){
+  data = read.csv(filename, skip = 1)
+  data = data[data$PARAM == 1 & year(data$Date) >= ifelse(is.null(record.start),
+                                                          0, record.start),]
+  date = strptime(data$Date, format = '%Y/%m/%d')
+  
+  # Aggregate Data
+  data = aggregate(data['Value'], list(month = cut(date, breaks = 'month')),  mean)
+  data = data.frame(
+    tapply(data$Value, month(data$month), mean, na.rm = T), 
+    tapply(data$Value, month(data$month), cc)
+  )
+  colnames(data) = c(unlist(strsplit(filename,'_daily.csv')), 'Months_Sampled')
+  row.names(data) = month.abb[1:12]
+  data
+}
+# Example: Find files and make a large table of all data in directory
+# files = list.files(pattern = '.csv')
+# data <- do.call("cbind", lapply(files, function(x) Mmmf(x, 1970)))
+
+# SECONDARY STEP:
+# Calculate Metadata for each site
+date.range = function(filename, record.start = 1970){
+  data = read.csv(filename, skip = 1)
+  data = data[data$PARAM == 1 & year(data$Date) >= ifelse(is.null(record.start),
+                                                          0, record.start),]
+  date = strptime(data$Date, format = '%Y/%m/%d')
+  data.frame(
+    Gauge = unlist(strsplit(filename,'_daily.csv')),
+    Record = paste(min(year(date)),'-', max(year(date)) )
+  )
+}
+# metadata = do.call('rbind', lapply(files, function(x) date.range(x)))
+
