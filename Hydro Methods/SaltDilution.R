@@ -5,8 +5,8 @@
 #  by: Matthew Chernos
 # 
 
-# Function to correct EC for Water Temperature
-EC_corr = function(Cond, Tw){Cond * (1 + 0.019 * (Tw - 25))}
+# Function to correct EC for Water Temperature (1.9%/C)
+EC_corr = function(Cond, Tw, Tr = 25){Cond / (1 + 0.019 * (Tw - Tr))}
 
 ##################################
 # Determining *k* by Calibration #
