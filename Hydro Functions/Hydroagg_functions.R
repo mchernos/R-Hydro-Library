@@ -26,7 +26,7 @@
 #	  	fit.plots()	-->	Plots model fit and returns relevant stats
 # 						including NSE, RMSE, R2 and PBIAS.
 
-library(lubridate)
+library('lubridate')
 library('hydroGOF')
 
 # Counts NAs

@@ -22,10 +22,10 @@
 rm(list = ls())
 
 # Required Libraries
-library(RSAGA)
-library(raster)
-library(maptools)
-library(rgdal)
+library('RSAGA')
+library('raster')
+library('maptools')
+library('rgdal')
 source('gdal_polygonizeR.R')		# Needed to polygonize rasters
 
 # Set the Initiation Value (see "Channel Network" below)
@@ -33,11 +33,26 @@ source('gdal_polygonizeR.R')		# Needed to polygonize rasters
 # too large, and you won't have enough complexity...
 init_value = 100000000			# "my" default = 10000000
 
-
 # Load DEM and prepare for SAGA Analyses
-dem = raster('permanent_data/dem.tif')
-dem = crop(dem, c(624989.9, 674999.9, 5520000, 5580000 ))
+dem = raster('permanent_data/dem_100m.gri')
+# dem = crop(dem, c(640000, 700000,  5470000, 5520000)) # Set to Michel Cr. Basin
 writeRaster(dem, "dem_saga.sdat", "SAGA", overwrite = T)
+
+###################################################################
+# 	To modify as required (i.e. add your spatial points here)	  #
+###################################################################
+# Ensure that if there is overlap, you have them ordered from largest-->smallest
+# i.e. a later watershed should only overlap with 1 previous watershed
+# Create/Read POIs
+# POIs = readOGR('permanent_data/watershed_pois.kml', 'Watersheds')
+# POIs = spTransform(POIs, crs(dem))
+# poi_dat = data.frame(X = c(639930,639768), Y = c(5484783,5484518), NAME = c('Fernie', 'CoalCr'))
+poi_dat = read.csv('permanent_data/pois.csv')
+POIs = SpatialPointsDataFrame(coordinates(poi_dat[,c(-1)]), 
+                              data.frame(Name = poi_dat$Site), 
+                              proj4string = crs(dem))
+writeOGR(POIs,'POIs.shp',layer = 'POIs', driver = 'ESRI Shapefile', overwrite = T)
+###################################################################
 
 # # Demonstrative...
 # rsaga.env()
@@ -67,24 +82,7 @@ rsaga.geoprocessor(lib = "ta_channels", module = 8,
 channel_shape = readOGR('channel_ntwrk.shp', 'channel_ntwrk')
 # channel_network = raster('channel_network.sdat')
 
-
-###################################################################
-# 	To modify as required (i.e. add your spatial points here)	  #
-###################################################################
-# Ensure that if there is overlap, you have them ordered from largest-->smallest
-# i.e. a later watershed should only overlap with 1 previous watershed
-# Create/Read POIs
-# POIs = readOGR('permanent_data/watershed_pois.kml', 'Watersheds')
-# POIs = spTransform(POIs, crs(dem))
-# poi_dat = data.frame(X = c(639930,639768), Y = c(5484783,5484518), NAME = c('Fernie', 'CoalCr'))
-poi_dat = read.csv('permanent_data/elk_points.csv')
-POIs = SpatialPointsDataFrame(coordinates(poi_dat[,c(-1,-4)]), 
-				data.frame(Name = poi_dat$Site_Code), 
-				proj4string = crs(dem))
-writeOGR(POIs,'POIs.shp',layer = 'POIs', driver = 'ESRI Shapefile', overwrite = T)
-###################################################################
-
-# # Snap Points to Lines (shapes_points, 19)
+# Snap Points to Lines (shapes_points, 19)
 # snap catchment points to stream network
 rsaga.geoprocessor(lib = 'shapes_points', 19,
 				param = list(
@@ -135,17 +133,22 @@ writeOGR(subb,'permanent_data/watersheds_final.shp',
 ######### 					END CODE 						#######
 ###################################################################
 x = readOGR('permanent_data/watersheds_final.shp', 'watersheds_final')
-x = x[-6,]
-shed = data.frame(Watershed = x$Name, Area.km2 = area(x)/10^6)
+proj4string(x) = proj4string(dem)
+
+areas = c()
+for(i in 1:length(x)){areas[i] = gArea(x[i,])}
+
+shed = data.frame(Watershed = x$Name, Area.km2 = areas/10^6)
 
 library('RColorBrewer')
 library('GISTools')
 library('raster')
 
 
-plot(dem, col = brewer.pal(100,'Greys'))
-plot(x, col = add.alpha(brewer.pal(length(x$DN),'Spectral'),0.6), add = T )
+plot(dem, col = brewer.pal(9,'Greys'))
+plot(x, col = brewer.pal(length(x$DN),'Spectral'), add = T )
 plot(channel_shape, add = T, col = 'blue')
+contour(dem, add = T, col = 'grey40')
 # points(snapped_points)
-legend('bottomleft',legend =  paste(x$Name,round(shed$Area,1), 'km2'), 
-		fill = brewer.pal(length(x$DN), 'Spectral'), bg = 'white')
+legend('topleft',legend =  paste0(x$Name,': ', round(shed$Area,1), ' km2'), 
+		fill = brewer.pal(length(x$DN), 'Spectral'), bg = 'white', cex = 0.65, ncol = 2)
