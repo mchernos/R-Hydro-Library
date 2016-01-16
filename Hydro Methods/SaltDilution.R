@@ -12,13 +12,29 @@ EC_corr = function(Cond, Tw, Tr = 25){Cond / (1 + 0.019 * (Tw - Tr))}
 # Determining *k* by Calibration #
 ##################################
 # EXAMPLE:
-# EC = scan(n = 13)
-# 330.0 360.7 384.6 408.2 430.9 453.2 475.1 496.4 518.0 543.0 565.0 587.0 605.0 
-# 
-# y = scan(n = length(EC))
-# 10 10 10 10 10 10 10 10 10 10 10 10 10
-# 
-# k.calib(EC, y)
+EC = scan(n = 6)
+344.5
+377.6
+407.4
+437.1
+449.7
+463.6
+y = scan(n = length(EC))
+10
+20
+20
+20
+10
+10
+Temp = scan(n = length(EC))
+0.5
+0.5
+0.5
+0.5
+0.5
+0.6
+k.calib(EC_corr(EC,Temp, Tr = 0.15), y)
+
 
 k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
   
