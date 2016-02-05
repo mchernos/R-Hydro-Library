@@ -34,10 +34,15 @@ trace.remove = function(x,char, rpl){
 
 # replaces NAs with linear relationship 
 linear.rep = function(x,y){
-	fit = lm(y~x)		# y = mx + b
-	round(ifelse(is.na(y), fit$coefficient[2]*x + fit$coefficient[1], y),1)
+	fit = lm(x~y)		# y = mx + b
+	round(ifelse(is.na(x), fit$coefficient[2]*y + fit$coefficient[1], x),1)
 }
 
+# replaces NAs with linear relationship 
+linear.rep0 = function(x,y){
+  fit = lm(x~y + 0)		# y = mx + b
+  round(ifelse(is.na(x), fit$coefficient[1]*y, x),1)
+}
 # Read in data and process
 read.aws.data = function(x){
 	temp = read.csv(paste(x,'csv',sep = '.'))
@@ -135,7 +140,8 @@ mergeT = function(x,y,xz,yz,xname, yname){
 # Linear fill for Temperature Data
 fill.T = function(x,y, mergeby = 'date'){
 	temp = merge(x,y, by = mergeby, all = T)
-	if(length(which(duplicated(temp$date))) > 0 ) {temp = temp[-which(duplicated(temp$date)),]}
+	if(length(which(duplicated(temp$date))) > 0 ) 
+	  {temp = temp[-which(duplicated(temp$date)),]}
 	maxT = linear.rep(temp$maxT.x, temp$maxT.y)
 	minT = linear.rep(temp$minT.x, temp$minT.y)
 	meanT = linear.rep(temp$meanT.x, temp$meanT.y)
@@ -144,17 +150,18 @@ fill.T = function(x,y, mergeby = 'date'){
 }
 
 # Linear fill for Precip. Data: can also directly replace (no relationship)
-fill.P = function(x,y,mergeby = 'date', linear = T){
+fill.P = function(x,y, mergeby = 'date', linear = T){
 	temp = merge(x,y, by = mergeby, all = T)	
-	if(length(which(duplicated(temp$date))) > 0 ) {temp = temp[-which(duplicated(temp$date)),]}
+	if(length(which(duplicated(temp$date))) > 0 ) 
+	  {temp = temp[-which(duplicated(temp$date)),]}
 	if(linear == F){
-		rain_mm = ifelse(is.na(temp$rain_mm.y), temp$rain_mm.x, temp$rain_mm.y) 
-		snow_cm = ifelse(is.na(temp$snow_cm.y), temp$snow_cm.x, temp$snow_cm.y)
-		precip_mm = ifelse(is.na(temp$precip_mm.y), temp$precip_mm.x, temp$precip_mm.y)
+		rain_mm = ifelse(is.na(temp$rain_mm.x), temp$rain_mm.y, temp$rain_mm.x) 
+		snow_cm = ifelse(is.na(temp$snow_cm.x), temp$snow_cm.y, temp$snow_cm.x)
+		precip_mm = ifelse(is.na(temp$precip_mm.x), temp$precip_mm.y, temp$precip_mm.x)
 	}else{
-		rain_mm = linear.rep(temp$rain_mm.x, temp$rain_mm.y)
-		snow_cm = linear.rep(temp$snow_cm.x, temp$snow_cm.y)
-		precip_mm = linear.rep(temp$precip_mm.x, temp$precip_mm.y)
+		rain_mm = linear.rep0(temp$rain_mm.x, temp$rain_mm.y)
+		snow_cm = linear.rep0(temp$snow_cm.x, temp$snow_cm.y)
+		precip_mm = linear.rep0(temp$precip_mm.x, temp$precip_mm.y)
 	}
 	data = data.frame(date = temp$date, rain_mm, snow_cm, precip_mm)
 	data
