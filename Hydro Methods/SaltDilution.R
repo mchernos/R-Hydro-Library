@@ -6,35 +6,25 @@
 # 
 
 # Function to correct EC for Water Temperature (1.9%/C)
-EC_corr = function(Cond, Tw, Tr = 25){Cond / (1 + 0.019 * (Tw - Tr))}
+EC_corr = function(Cond, Tw, Tr = 0){Cond / (1 + 0.019 * (Tw - Tr))}
 
 ##################################
 # Determining *k* by Calibration #
 ##################################
-# EXAMPLE:
-EC = scan(n = 6)
-344.5
-377.6
-407.4
-437.1
-449.7
-463.6
-y = scan(n = length(EC))
-10
-20
-20
-20
-10
-10
-Temp = scan(n = length(EC))
-0.5
-0.5
-0.5
-0.5
-0.5
-0.6
-k.calib(EC_corr(EC,Temp, Tr = 0.15), y)
-
+# # EXAMPLE:
+# dat = scan()
+# 0	334.8	3.3
+# 10	351.8	3.3
+# 10	369.2	3.3
+# 10	384.7	3.3
+# 10	400.5	3.3
+# 10	417.2	3.3
+# 10	431.6	3.2
+# 
+# dat = data.frame(matrix(dat, ncol = 3, byrow = T))
+# colnames(dat) = c('y', 'EC', 'Temp')
+# k.calib(EC_corr(dat$EC, dat$Temp, Tr = 0), dat$y, V_c = 1000)
+# 
 
 k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
   
@@ -81,8 +71,9 @@ k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
        xlab = 'Electrical Conductivity')
   abline(k.fit, col = 'red')
   mtext(paste('k = ', round(coef(k.fit)['EC'],8),
-              '\nR2 = ', round(summary(k.fit)$r.squared,2), sep = ''), 
-        line = -2, adj = 0, font = 3)
+              '\nR2 = ', round(summary(k.fit)$r.squared,2),
+              '\nE = ', round(coef(k.fit)[1],8), sep = ''), 
+        line = -3, adj = 0, font = 3)
   
   k
 }
