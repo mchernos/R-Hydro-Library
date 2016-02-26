@@ -189,7 +189,7 @@ daily.flowQ = function(Q, date, title, record.start = NULL, test.year = NULL){
 # daily.flowQ(flow$Value, flow$Date, 'Elk River Flows', test.year = 2015)
 
 # Daily Flow for two different Models/Gauges
-daily.flows =  function(Q1,Q2, date, title, stats = F){
+daily.flows =  function(Q1, Q2, date, title, stats = F){
 	yrs = paste(year(date[1]), year(date[length(date)]), sep = ' - ')
 	
 	# Make the data:
@@ -201,11 +201,12 @@ daily.flows =  function(Q1,Q2, date, title, stats = F){
 	Q210 = tapply(Q2, yday(date), quantile, 0.10, na.rm = T)
 	
 	# Make Plot
-	newdata = data.frame(date = strptime(1:366,'%j'), Qmean, Q90, Q10, Qmean2, Q290, Q210)
+	newdata = data.frame(date = strptime(1:length(Qmean),'%j'), Qmean, Q90, Q10, Qmean2, Q290, Q210)
 	par(mar = c(4,4.5,3,3))
-	plot(newdata$date, Qmean, type = 'l', lwd = 2, ylim = c(min(Qmean2-Qmean),max(c(Q90,Q290))),
-			xlab = '', ylab = expression(paste('Daily Average Discharge (',m^3,'/s)')), 
-			main = title, col = 'navy')
+	plot(newdata$date, Qmean, type = 'l', lwd = 2, 
+	     ylim = c(min(Qmean2-Qmean,na.rm = T), max(c(Q90,Q290),na.rm = T)),
+	     xlab = '', ylab = expression(paste('Daily Average Discharge (',m^3,'/s)')), 
+	     main = title, col = 'navy')
 	lines(newdata$date, Qmean2, lwd = 2, col = 'firebrick')
 	mtext(yrs)
 	lines(newdata$date, Q90, col = rgb(0,0,128/255, 0.5))
