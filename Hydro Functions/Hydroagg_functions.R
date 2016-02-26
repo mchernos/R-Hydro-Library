@@ -188,7 +188,10 @@ daily.flowQ = function(Q, date, title, record.start = NULL, test.year = NULL){
 }
 # daily.flowQ(flow$Value, flow$Date, 'Elk River Flows', test.year = 2015)
 
-# Daily Flow for two different Models/Gauges
+##############################################
+# Daily Flow for two different Models/Gauges #
+##############################################
+
 daily.flows =  function(Q1, Q2, date, title, stats = F){
 	yrs = paste(year(date[1]), year(date[length(date)]), sep = ' - ')
 	
@@ -215,10 +218,18 @@ daily.flows =  function(Q1, Q2, date, title, stats = F){
 	lines(newdata$date, Q210, col = rgb(178/255,0, 0, 0.5))
 	lines(newdata$date, Qmean2-Qmean, lwd = 2, col = 'grey60')
 	abline(h=0, lty = 2)
+
+	# Add MAF calcs
+	abline(h = c(mean(Qmean,na.rm = T), mean(Qmean2, na.rm = T)), 
+	       col = c('navy', 'firebrick'))
+	
+	# Add Legend
 	legend('topright', c('Observed', 'Modelled', '10%, 90% Quantiles', 'Difference' , 
 				paste('n = ',length(unique(year(date))),' yrs', sep = '' ) ), 
 			lwd = c(2,2,1,2,0), lty = 1, col = c('navy', 'firebrick', 'grey60','grey60', 'white'),
 			bty = 'n')
+	
+	# Add Stats
 	if(stats == T){
 		sim = Q2
 		obs = Q1
