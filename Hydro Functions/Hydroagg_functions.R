@@ -121,18 +121,19 @@ daily.flow = function(filename, title, record.start = NULL){
 	# New Data colation, plot data
 	newdata = data.frame(date = strptime(1:365,'%j'), Qmean, Q90, Q10, Qmax, Qmin, n)
 	par(mar = c(4,4.5,3,3))
-	plot(newdata$date, Qmean, type = 'l', lwd = 2, ylim = c(0,max(Qmax)),
+	plot(newdata$date, Qmean, type = 'l', lwd = 2.5, ylim = c(0,max(Qmax)),
 			xlab = '', ylab = expression(paste('Daily Average Discharge (',m^3,'/s)')), 
 			main = title)
 	mtext(yrs)
-	lines(newdata$date, Q90, col = rgb(0,0,128/255, 0.75))
-	lines(newdata$date, Q10, col = rgb(0,0,128/255, 0.75))
-	lines(newdata$date, Qmax, col = 'grey60')
-	lines(newdata$date, Qmin, col = 'grey60')
+	lines(newdata$date, Q90, col = '#92c5de', lwd = 2)
+	lines(newdata$date, Q10, col = '#f4a582', lwd = 2)
+	lines(newdata$date, Qmin, col = '#ca0020', lwd = 2)
+	lines(newdata$date, Qmax, col = '#0571b0', lwd = 2)
 	
-	legend('topright', c('Average', '10%, 90% Quantiles', 'Max/Min', 
+	legend('topright', c('Max',  '90% Quantile', 'Average', '10% Quantile', 'Min', 
 				paste('n = ',length(unique(year(data$Date[is.na(data$Value)==F]))),' yrs', sep = '' ) ), 
-			lwd = c(2,1,1,0), lty = 1, col = c('black', rgb(0,0,128/255, 0.75), 'grey60', 'white'),
+			lwd = c(rep(2,5),0), lty = 1, 
+			col = c('#0571b0', '#92c5de','black', '#f4a582','#ca0020', 'white'),
 			bty = 'n')
 	newdata
 }
