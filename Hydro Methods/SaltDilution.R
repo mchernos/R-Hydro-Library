@@ -6,6 +6,7 @@
 # 
 
 # Function to correct EC for Water Temperature (1.9%/C)
+# Tw is water temperature (C); Tr is reference temperature (C)
 EC.corr = function(Cond, Tw, Tr = 0){Cond / (1 + 0.019 * (Tw - Tr))}
 
 ##################################
@@ -21,24 +22,27 @@ EC.corr = function(Cond, Tw, Tr = 0){Cond / (1 + 0.019 * (Tw - Tr))}
 # 10	417.2	3.3
 # 10	431.6	3.2
 # 
-# Convert to data frame, and calculate calibration coefficient (k):
-# 
+# # Convert to data frame, and calculate calibration coefficient (k)
 # dat = data.frame(matrix(dat, ncol = 3, byrow = T))
 # colnames(dat) = c('y', 'EC', 'Temp')
-# k.calib(EC.corr(dat$EC, dat$Temp, Tr = 0), dat$y, V_c = 1000)
 # 
+# # If not corrected, correct EC for reference temperature (0*C)
+# EC = EC.corr(dat$EC, dat$Temp, Tr = 0)
+# 
+# # Calculate k value
+# k.calib(EC, dat$y, V_c = 1000)
+
 
 k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
   
   # CALIBRATION METHOD VALUES:
-  # V_c = 1000      # (mL) - volume of streamwater in calibration tank
-  # X = 10          # (mL) - volume of injection solution
-  # V_o = 1000      # (mL) - volume of streamwater in 2nd soln.
-  RC_sec = X/(V_o + X)
+  # EC =>           # (uS/mL) - Conductivity (corrected to reference temperature)
+  # y =>            # (mL)    - volume of secondary solution added at each step
+  # V_c = 1000      # (mL)    - volume of streamwater in calibration tank
+  # X = 10          # (mL)    - volume of injection solution
+  # V_o = 1000      # (mL)    - volume of streamwater in 2nd soln.
   
-  # If not corrected: (update = probably better to correct outside function)
-  # EC = EC.corr(EC, 8.7)
-  #
+  RC_sec = X/(V_o + X)
   
   # 1) Create Secondary Solution (dilute injection soln.)
   #   - Mix X mL (5-10) of injection solution into 
@@ -58,9 +62,11 @@ k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
   
   # y = 10 # mL
   # y = rep(y, length(EC))  # added 2nd soln. increments added
+  
   RC = (RC_sec * cumsum(y)) / (V_c + cumsum(y))
   
   # 4) Continue above procedure until EC > EC_slug max
+  
   # 5) Plot RC (y) vs. EC (x)
   #     - the slope of the line is k
   
@@ -77,6 +83,7 @@ k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
               '\nE = ', round(coef(k.fit)[1],8), sep = ''), 
         line = -3, adj = 0, font = 3)
   
+  # Return k value
   k
 }
 
@@ -105,26 +112,32 @@ k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
 
 # Sp_Cond = data$Sp..Cond...uS.cm.
 # Tw = data$Temp..C.
+# Q.salt(Sp_Cond, Tw, k = 5.0e-6)
 ##########
 
 Q.salt = function(Cond, Tw, k, V_slug = 1000, dT = 1){
-  # dT = 1                  # (s) - sampling resolution
-  # V_slug = 1000           # mL
-  V_slug = V_slug/1000^2  # mL/L (convert to m^3)
+  # Cond                    # un-corrected water temperature (uS/mL)
+  # Tw                      # Water Temperature (*C)
   # k = 5e-6                # From Above
+  # V_slug = 1000           # Slug volume (mL)
+  # dT = 1                  # sampling resolution (s)
+  V_slug = V_slug/1000^2    # mL/L (convert to m^3)
   
   # 7) Correct EC for Tw
   EC = EC.corr(Cond, Tw)
   
-  # EC_bg = min(EC) # uS/cm 
+  # Use first value as background conductivity level
   EC_bg = EC[1]
   
+  # Generate Plot
   plot(seq(1,by = 1, length.out = length(EC)), EC,
        xlab = 'Time (s)', ylab = 'EC (uS/cm)',
        type = 'l')
   
+  # Calculate Discharge
   Q = V_slug / (k * dT * sum(EC - EC_bg))
   
+  # Return discharge value
   Q
 }
 
