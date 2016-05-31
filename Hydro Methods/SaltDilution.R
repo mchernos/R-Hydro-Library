@@ -6,7 +6,7 @@
 # 
 
 # Function to correct EC for Water Temperature (1.9%/C)
-EC_corr = function(Cond, Tw, Tr = 0){Cond / (1 + 0.019 * (Tw - Tr))}
+EC.corr = function(Cond, Tw, Tr = 0){Cond / (1 + 0.019 * (Tw - Tr))}
 
 ##################################
 # Determining *k* by Calibration #
@@ -21,21 +21,23 @@ EC_corr = function(Cond, Tw, Tr = 0){Cond / (1 + 0.019 * (Tw - Tr))}
 # 10	417.2	3.3
 # 10	431.6	3.2
 # 
+# Convert to data frame, and calculate calibration coefficient (k):
+# 
 # dat = data.frame(matrix(dat, ncol = 3, byrow = T))
 # colnames(dat) = c('y', 'EC', 'Temp')
-# k.calib(EC_corr(dat$EC, dat$Temp, Tr = 0), dat$y, V_c = 1000)
+# k.calib(EC.corr(dat$EC, dat$Temp, Tr = 0), dat$y, V_c = 1000)
 # 
 
 k.calib = function(EC, y, V_c = 1000, X = 10, V_o = 1000){
   
   # CALIBRATION METHOD VALUES:
-  # V_c = 1000 # (mL) - volume of streamwater in calibration tank
-  # X = 10 # (mL) - volume of injection solution
-  # V_o = 1000 # (mL) - volume of streamwater in 2nd soln.
+  # V_c = 1000      # (mL) - volume of streamwater in calibration tank
+  # X = 10          # (mL) - volume of injection solution
+  # V_o = 1000      # (mL) - volume of streamwater in 2nd soln.
   RC_sec = X/(V_o + X)
   
-  # If not corrected:
-  # EC = EC_corr(EC, 8.7)
+  # If not corrected: (update = probably better to correct outside function)
+  # EC = EC.corr(EC, 8.7)
   #
   
   # 1) Create Secondary Solution (dilute injection soln.)
@@ -112,7 +114,7 @@ Q.salt = function(Cond, Tw, k, V_slug = 1000, dT = 1){
   # k = 5e-6                # From Above
   
   # 7) Correct EC for Tw
-  EC = EC_corr(Cond, Tw)
+  EC = EC.corr(Cond, Tw)
   
   # EC_bg = min(EC) # uS/cm 
   EC_bg = EC[1]
