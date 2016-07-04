@@ -225,7 +225,7 @@ daily.flows =  function(Q1, Q2, date, title, stats = F){
 	       col = c('navy', 'firebrick'))
 	
 	# Add Legend
-	legend('topright', c('Observed', 'Modelled', '10%, 90% Quantiles', 'Difference' , 
+	legend('topright', c('Observed', 'Modelled', 'D10, D90', 'Difference' , 
 				paste('n = ',length(unique(year(date))),' yrs', sep = '' ) ), 
 			lwd = c(2,2,1,2,0), lty = 1, col = c('navy', 'firebrick', 'grey60','grey60', 'white'),
 			bty = 'n')
@@ -234,7 +234,7 @@ daily.flows =  function(Q1, Q2, date, title, stats = F){
 	if(stats == T){
 		sim = Q2
 		obs = Q1
-		fit= lm(sim~obs, data = data, na.action = na.exclude)
+		fit= lm(sim~obs, data = data.frame(sim, obs), na.action = na.exclude)
 		mtext(paste(' R2 = ', round(summary(fit)$r.squared,2), 
 		' \n NSE = ', round(NSE(sim, obs),2), 
 		' \n RMSE = ', round(rmse(sim, obs),2),' m3/s',
