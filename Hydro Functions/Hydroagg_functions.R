@@ -193,7 +193,7 @@ daily.flowQ = function(Q, date, title, record.start = NULL, test.year = NULL){
 # Daily Flow for two different Models/Gauges #
 ##############################################
 
-daily.flows =  function(Q1, Q2, date, title, stats = F){
+daily.flows =  function(Q1, Q2, date, title, stats = F, MAF.Lines = T){
 	yrs = paste(year(date[1]), year(date[length(date)]), sep = ' - ')
 	
 	# Make the data:
@@ -221,8 +221,10 @@ daily.flows =  function(Q1, Q2, date, title, stats = F){
 	abline(h=0, lty = 2)
 
 	# Add MAF calcs
-	abline(h = c(mean(Qmean,na.rm = T), mean(Qmean2, na.rm = T)), 
-	       col = c('navy', 'firebrick'))
+	if(MAF.Lines == T){
+	  abline(h = c(mean(Qmean,na.rm = T), mean(Qmean2, na.rm = T)), 
+	         col = c('navy', 'firebrick'))
+	}
 	
 	# Add Legend
 	legend('topright', c('Observed', 'Modelled', 'D10, D90', 'Difference' , 
