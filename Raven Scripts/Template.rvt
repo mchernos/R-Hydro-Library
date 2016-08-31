@@ -1,0 +1,6 @@
+:MultiData
+1970-01-01 00:00:00 1.0 16801 
+  :Parameters,TEMP_DAILY_MAX,TEMP_DAILY_MIN,TEMP_AVE,PRECIP
+  :Units,C,C,C,mm/d
+INSERT DATA HERE
+:EndMultiData
