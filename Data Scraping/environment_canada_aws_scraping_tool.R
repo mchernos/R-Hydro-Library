@@ -3,7 +3,7 @@
 #######################################################
 # By M. Chernos
 #
-# March 10, 2015
+# March 10, 2015 - updated for new URLs Sept. 2016
 #######################################################
 # Data is from climate.weather.gc.ca and is graciously 
 # collected and made available at no cost by Environment 
@@ -22,18 +22,20 @@ library('XML')
 # Location dependent URL
 # Full URL looks lke this:
 #
-# http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&
-# Prov=QC&StationID=5415&dlyRange=1941-09-01%7C2014-07-31   <--- This is the part to parse out
-# &cmdB1=Go&Year=2014&Month=8&cmdB1=Go#
-#
-# Go to climate.weather.gc.ca and look up daily site and input url from "Prov=" to "&cmbB1="
+# location_url = 'http://climate.weather.gc.ca/climate_data/daily_data_e.html?hlyRange=1953-01-01%7C1995-03-31&dlyRange=1887-11-01%7C1995-03-31&mlyRange=1887-01-01%7C1995-03-01&StationID=2364&Prov=AB&urlExtension=_e.html&searchType=stnName&optLimit=yearRange&StartYear=1840&EndYear=2016&selRowPerPage=25&Line=0&searchMethod=contains&txtStationName=banff&timeframe=2&Year='
+# 1940
+# '&Month='
+# 1
+# '#'
+
+# Go to climate.weather.gc.ca and look up daily site and input url up to 'Year='
 # (need to press 'next day' once to get proper html...)
 
 scrape.daily.ec = function(month1, month2, location_url, sitename){
   
   # month1 = '1970-01-01'
   # month2 = '1995-05-31'
-  # location_url = "Prov=BC&StationID=50818&dlyRange=2012-11-08%7C2015-01-27" # YXC Cranbrook
+  # location_url = 'http://climate.weather.gc.ca/climate_data/daily_data_e.html?hlyRange=1953-01-01%7C1995-03-31&dlyRange=1887-11-01%7C1995-03-31&mlyRange=1887-01-01%7C1995-03-01&StationID=2364&Prov=AB&urlExtension=_e.html&searchType=stnName&optLimit=yearRange&StartYear=1840&EndYear=2016&selRowPerPage=25&Line=0&searchMethod=contains&txtStationName=banff&timeframe=2&Year='
   
   # Set Date Range
   start = strptime(month1, format = '%Y-%m-%d')
@@ -47,14 +49,12 @@ scrape.daily.ec = function(month1, month2, location_url, sitename){
     month = month(months[i])	
     
     # Form URL
-    start_url = paste("http://climate.weather.gc.ca/climateData/dailydata_e.html?timeframe=2&",location_url,"&cmdB1=Go&Year=",sep = '')
-    mid_url = '&Month='
-    end_url = "&cmdB1=Go#"
-    url = paste(start_url, year, mid_url, month, end_url,sep = '')
     
+    url = paste(location_url,year, '&Month=', month,'#',sep = '')
+
     # Scrape data from html pages
     data = readHTMLTable(url)
-    data = data.frame(data[2])
+    data = data.frame(data)
     data = data[-1,]
     col.names = c('day','maxT', 'minT', 'meanT', 'heat_dd', 'cool_dd', 'total_rain_mm', 'total_snow_cm',
                   'total_precip_mm', 'snow_on_grnd_cm', 'dir_max_gust_deg', 'speed_max_gust_kmh')
@@ -93,6 +93,8 @@ scrape.daily.ec = function(month1, month2, location_url, sitename){
 ############################
 # HOURLY WEATHER DOWNLOADS #
 ############################
+
+# Note: not updated since URLs changed!
 
 # Location dependent URL
 # Full URL looks lke this:
