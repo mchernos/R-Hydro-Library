@@ -84,11 +84,9 @@ scrape.daily.ec = function(month1, month2, location_url, sitename){
   }
   write.csv(weather_data, paste0(sitename, year(start), '_', year(end),'.csv'), row.names = F)
 }
-
-# # Keep estimates ('LegendEE')
-# test = weather_data[,i]
-# test[grep('+LegendEE',test)] = as.numeric(strsplit(as.character(test[grep('+LegendEE',test)]),'LegendEE', collapse = T))
-# test[grep('+LegendEE',weather_data[,i])] = strsplit(as.character(sub),"LegendEE")
+# Example:
+# location_url = 'http://climate.weather.gc.ca/climate_data/daily_data_e.html?hlyRange=1953-01-01%7C1995-03-31&dlyRange=1887-11-01%7C1995-03-31&mlyRange=1887-01-01%7C1995-03-01&StationID=2364&Prov=AB&urlExtension=_e.html&searchType=stnName&optLimit=yearRange&StartYear=1840&EndYear=2016&selRowPerPage=25&Line=0&searchMethod=contains&txtStationName=banff&timeframe=2&Year='
+# scrape.daily.ec('1928-01-01', '1964-12-31', location_url, 'banff2')
 
 ############################
 # HOURLY WEATHER DOWNLOADS #
