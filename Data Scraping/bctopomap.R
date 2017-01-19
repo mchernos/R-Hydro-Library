@@ -34,7 +34,7 @@ gd.alb = spTransform(gd, CRS("+proj=aea +lat_0=45 +lat_1=50 +lat_2=58.5 +lon_0=-
 
 
 # plot raster map of elevation and add BC coast and borders 
-plot(gadbc.alb, box = FALSE, axes = FALSE) # default palette
+plot(gadbc.alb, box = FALSE, xlim = c(1500000, 2300000), ylim = c(400000, 1200000)) # default palette
 lines(gd.alb)
 
 scalebar(400000, xy = c(400000, 400000), 
