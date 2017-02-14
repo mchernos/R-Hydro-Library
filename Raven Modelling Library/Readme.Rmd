@@ -1,0 +1,84 @@
+---
+title: "How to make a Raven Model"
+author: "Matt Chernos"
+date: '2017-02-13'
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+This document gives a brief overview of the steps required to generate a 
+working, calibrated hydrological model. See "Efficient semi-distributed hydrological modelling workflow for simulating streamflow and characterizing hydrologic processes" by Chernos et al (2017) (`hydro_modelling_1025.pdf`) for further details and case-studies.
+
+## Data Acquisition
+At the bare minimum, Raven requires daily climate data (max/min/mean temperature and precipitation) and a list of HRUs (Hydrological Response Units). In order to calibrate the model, streamflow data will be required for at least one location. In addition, independent snow pillow (SWE) and climate (air temperature and/or precipitation) data will help, particularly in high-relief environments.
+
+### Meteorological Data
+Air temperature and precipitation data are often downloaded from [Environment Canada](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html), though additional sources exist, including the Pacific Climate Consortium (for BC), (add sources as found).
+
+Typically, these data will contains `NA` values, which Raven cannot accomodate. In order to remove the `NA`s, imputation routines are required. The simplest version of imputation uses annual linear regressions to impute missing air temperature values and precipitation (though often precipitation regressions are poor, and it is more desireable to simply substitute data direction, without linear regression). These functions are found in the `aws_functions.R` script. All functions are summarised in the script header, but the imputation routines happen in `fill.P()` and `fill.T()` functions.
+
+### Hydrologic Response Units
+
+In order to reduce computation time, areas of similar character and location, termed Hydrologic Response Units (HRUs) (e.g. Jost et al., 2012; Stahl et al., 2008), are lumped together and assumed to have a uniform hydrologic response to meteorological inputs.  HRU delineation typically consists of an overlay of land-use, elevation bands, slope, and aspect. In complex basins (typically steep, mountainous watersheds), a raw overlay can generate a large number of HRUs, many of which will be small and discontiguous. A moving window filter can be applied using the `focal()` function in the R “raster" package (Hijmans and van Etten, 2012) to reduce the scatter in the land-use layer. The function smooths the raster by finding the mode in a moving window with a user-specified number of grid-cells.
+
+For input into Raven, the area, elevation, land-use class, vegetation class, soil profile, slope, and aspect must be specified for each HRU. Elevation, slope, and aspect can be obtained from the mean value in each HRU, and land-use can be obtained from the mode. The vegetation and soil classes for each HRU are tied to each land-use type, while the longitude and latitude of each HRU can be approximated by its centroid. 
+
+These processes are all enacted within the `HRU_Class.R` script, which depends on the `gdal_polygonize.R` script. This process requires a rasterized DEM, a land-use raster, and a shapefile of the basin. Typically, a DEM and land-use raster can be found on [NRCan GeoGratis](http://www.nrcan.gc.ca/earth-sciences/geography/topographic-information/free-data-geogratis/11042). A shapefile of the basin (and potentially nested sub-basins) can be derived from `Watersheds.R` script, which requires a .kml file of gauges, or using any GIS program.
+
+### Channel Profiles
+For each reach (i.e. each sub-basin/gauging location) channel widths, depths, lengths, and Manning's n need to be estimated. These can be compiled in the following format: 
+```
+# -------
+# Adams River Near Squilax
+# -------
+:ChannelProfile 08LD001
+:Bedslope 0.001
+:SurveyPoints
+0 3
+2 0
+38 0
+40 3
+:EndSurveyPoints
+:RoughnessZones
+0 0.1       #<- Manning's n
+:EndRoughnessZones
+:EndChannelProfile
+```
+
+These data can be acquired by many means, though the easiest is often using Google Earth to trace the channel. I have found this easiest to do by inputting all the data into a table, and using the script `extract_hydro_sites.R`.
+
+## Assembling a Raven Model
+
+Once the required data have been acquired, the Raven model can be assembled. Each Raven model requires 5 files:
+
+* `.rvh` file contains the HRU table, as well as a header-table that contains names, and parameters for each sub-basin in the model
+* `.rvi` file contains the model processes and emulation, as well as specifies that run time, name, length, and dictates what output will be generated (SNOW by basin, error statistics, TEMP by HRU, ect.)
+* `.rvp` file contains all model parameters and their values. It should also call all channel profiles and any land-use changes during the simulation (optional).
+* `.rvt` file contains all time-series forcings (in most cases streamflow and climate stations). Each streamflow/climate record will typically be given its own file (since they can be very long), and master .rvt file will comprise of a list of all time-series'
+* `.rvc` file contains the initial conditions. Values here are optional, and are likely not very important for long runs, though there is substantial flexibility here. 
+
+## Running Raven
+
+Raven can be run using the command-line. On a PC this is often done using cygwin, though alternatives exist. On a Mac this is done using Terminal (note: wine emulator is currently required for a mac). To run a model, simply call `Raven.exe Model_name`. See Raven model for more advanced/customizable run calls.
+
+
+## Model Calibration
+
+Once the model produces streamflow, parameters will need to be tuned to better reflect the hydrograph. This is likely to be the longest/most frustrating/time-consuming part. At this stage, in some models, you may suspect the climate station(s) don't really reflect current conditions, and may need to remove/add sites. Model performance is most typically evaluated using NSE and PBIAS terms. While streamflow fit is obviously the end-goal, data-permitting, we like to focus on ensuring forcing data (air temperature, precipitation, snowpack/SWE) fit with independent observational data. This has the added benefit of ensuring sensitive parameters (such as lapse rates and melt rates) are reasonably close, and can help reduce optomization runs needed, as well as the potential for equifinality.
+
+Once the model satisfactorily emulates snowpack and air temperatures, streamflow will need to be calibrated using OSTRICH. This is discussed in great detail in the paper cited at the beginning of the article here, but essentially, the most efficient method involves a 3-step approach:
+
+* first testing parameter sensitivity using the LM algorithm, over a small run(1-10 iterations, see R script `OstrichObs.R` for a quick way to generate Ostrich observations), 
+* second, the bulk of calibration is done using computationally efficient DDS algorithm,
+* finally, a small run using the LM algorithm to 'tighten-up' parameters, and obtain standard error estimates for all sensitive parameters.
+
+Model performance should be evaluated for the calibration period, as well as an independent validation period (i.e a period of record not used in the above calibration), data permitting, of course.
+
+

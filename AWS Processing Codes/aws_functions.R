@@ -13,7 +13,7 @@
 # annual.precip() - summarizes P data + missing days
 # read.aws.data() - reads AWS data, replaces 'trace' precip w/ 0.1 mm, allows 'estimated'
 # fill.T() - uses first dataset T data to fill 2nd dataset NAs using linear regression
-# fill.T() - same but for P; can choose direct replacement (instead of linear reg.)
+# fill.P() - same but for P; can choose direct replacement (instead of linear reg.)
 #########################
 
 # Remove flaggings function
