@@ -13,8 +13,11 @@
 # RDM 2014 Feb 6 - Adapted by M. Chernos, Feb 2015
 # April 2015     - Turned into function (M. Chernos)
 # May 2015		 - Added ability to weigh prob. of yearly event happening again
+# Feb 2018 - updated to take a data.frame instead of a csv file
 ###############################################################
-# data.csv   --> .csv filename (function takes annual extreme data from Water Survey of Canada)
+# [depreciated] data.csv   --> .csv filename (function takes annual extreme data from Water Survey of Canada)
+# Q          --> Discharge values (max annual)
+# Years      --> Years of record
 # title      --> character title of plot
 # breaks     --> numeric input, (number of breaks for horizontal lines on plot)
 # write.table--> writes .csv output for return periods and standard errors for GEV and Log 3 predictions
@@ -25,17 +28,19 @@
 # FFA('elknatal_annualextremes.csv', 'Elk River Near Natal', 6, write.table = F, print.data = F, year.prob = 2005)
 # -------------------------------------------------------
 # rm(list = ls())
+# Read in data
+# data = read.csv(data.csv)
+# data = data[data$PARAM == 1 & is.na(data$MAX) == F,] 	# remove level data (param = 2)
+# Q = data$MAX
+# Years = data$Year
+# FFA(Q, Years, 'Matt Test', write.table = T)
 
-FFA = function(data.csv, title, breaks, write.table = FALSE, print.data = FALSE, year.prob = NULL){
+FFA = function(Q, Years, title, breaks = 5, write.table = FALSE, 
+               print.data = FALSE, year.prob = NULL){
 
-	# Read in data
-	data = read.csv(data.csv)
-	data = data[data$PARAM == 1 & is.na(data$MAX) == F,] 	# remove level data (param = 2)
-	
 	# Specify Q and Labels
-	Q = data$MAX
 	graphlab = title
-	yrs = paste(data$Year[1], data$Year[length(data$Year)], sep = ' - ')
+	yrs = paste(min(Years, na.rm = T), max(Years, na.rm = T), sep = ' - ')
 	Qbreak = breaks 								# sequence for horizontal bars
 	
 	# Generate plotting positions
